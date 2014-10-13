@@ -7,21 +7,28 @@ Database Management System is an umbrella term that refers to all sorts of compl
 Database management systems are based on database models: structures defined for handling the data. Each emerging DBMS, and applications created to actualise their methods, work in very different ways with regards to definitions and storage-and-retrieval operations of said information.
 
 Although there are a large number of solutions that implement different DBMs, each period in history has seen a relatively small amount of choices rapidly become extremely popular and stay in use for a longer time, with probably the most predominant choice since the past couple of decades (or even longer) being the Relational Database Management Systems (RDBMS).
-
-##Relational Databases
+##Databases
+###Relational
 - SQLite
 - MySQL
 - PostgreSQL
 - MSSQL
 - Oracle
 
-##NoSQL Databases
+###NoSQL
 - MongoDB
 - Redis
 - CouchDB
 - ArangoDB
 - LevelDB
 - Neo4j
+
+##ORMs
+
+Object-relational mapping (ORM, O/RM, and O/R mapping) in computer science is a programming technique for converting data between incompatible type systems in object-oriented programming languages. This creates, in effect, a "virtual object database" that can be used from within the programming language. There are both free and commercial packages available that perform object-relational mapping, although some programmers opt to create their own ORM tools.
+
+- [Mongoose](http://mongoosejs.com) - Elegant MongoDB object modeling.
+- [Sequelize](https://github.com/sequelize/sequelize) - Multi-dialect ORM. Supports PostgreSQL, SQLite, MySQL.
 
 ##Resources
 
