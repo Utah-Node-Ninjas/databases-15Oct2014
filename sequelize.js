@@ -18,6 +18,7 @@ var db = new Sequelize(
     logging: console.log
   }
 );
+
 db.authenticate()
   .complete(function(err) {
     if (err) {
@@ -38,50 +39,42 @@ var TestModel = db.define('TestModel', {
 });
 
 
-TestModel.find({
-  where: {
-    id: 7
-  }
-}).success(function(item) {
-  if (item === null) {
-    console.log('record doesn\'t exist!')
-  }
-  else {
-    console.log('record exists!', item)
-  }
-});
 
-TestModel.create({
-  id: 7,
-  name: 'John'
-}).success(function(item) {
-  if (item === null) {
-    console.log('write failed');
-  }
-  else {
-    console.log('write success', item);
-  }
-});
+checkCreateUser();
 
-TestModel.find({
-  where: {
-    id: 7
-  }
-}).success(function(item) {
-  if (item === null) {
-    console.log('record doesn\'t exist!')
-  }
-  else {
-    console.log('record exists!', item)
-    item.updateAttributes({
-      name: 'Jacob'
-    }).success(function(data) {
-      if (data === null) {
-        console.log('write failed');
-      }
-      else {
-        console.log('write success', data);
-      }
-    })
-  }
-});
+function checkCreateUser() {
+  TestModel.find({
+    where: {
+      id: 7
+    }
+  }).success(function(item) {
+    if (item === null) {
+      console.log('record doesn\'t exist!')
+      TestModel.create({
+        id: 7,
+        name: 'John'
+      }).success(function(data) {
+        if (data === null) {
+          console.log('write failed');
+        }
+        else {
+          checkCreateUser();
+          console.log('write success', data);
+        }
+      });
+    }
+    else {
+      console.log('record exists!', item)
+      item.updateAttributes({
+        name: 'Jacob'
+      }).success(function(data) {
+        if (data === null) {
+          console.log('write failed');
+        }
+        else {
+          console.log('write success', data);
+        }
+      })
+    }
+  });
+}
