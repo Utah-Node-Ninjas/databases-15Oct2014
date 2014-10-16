@@ -8,36 +8,49 @@ Mongoose.connection.on('error', function() {
     '✗ MongoDB Connection Error. Please make sure MongoDB is running.');
 });
 
-var User = new Mongoose.Schema({
-  id: {
-    type: String,
-    unique: true
-  },
-  name: {
-    type: String,
-    default: '',
-    lowercase: true
-  }
-});
+Mongoose.connection.once('open', function callback () {
 
-checkCreateUser();
+  console.log('Connected');
 
-function checkCreateUser() {
-  User.findById(7, function(err, user) {
-    if (err) {
-      console.log('record doesn\'t exist!')
-      var user = new User();
-      user.name = 'bob';
-      user.id = 7;
-      user.save(function(err) {
-        if (!err) {
-          console.log('Created User')
-          checkCreateUser();
-        }
-      });
-    }
-    else {
-      console.log('record exists!', user)
+  var User = Mongoose.Schema({
+    id: {
+      type: String,
+      unique: true
+    },
+    name: {
+      type: String,
+      default: '',
+      lowercase: true
     }
   });
-}
+
+  var UserModel = Mongoose.model('User', User);
+
+  checkCreateUser();
+
+  function checkCreateUser() {
+    UserModel.findOne({id:7}, function(err, user) {
+
+      if(err) {
+        console.log('Issue with the db');
+      } else if (!user) {
+        console.log('record doesn\'t exist!');
+        var user = new UserModel();
+        user.name = 'bob';
+        user.id = 7;
+        user.save(function(err) {
+          if (!err) {
+            console.log('Created User');
+            checkCreateUser();
+          }
+        });
+      } else {
+        console.log('record exists!', user);
+      }
+    });
+  }
+
+
+});
+
+
